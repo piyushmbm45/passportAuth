@@ -19,10 +19,11 @@ mongoose.connect(uri, {
 
 const userSchema = new Schema({
     id : String,
-    name: String
+    name: String,
+    photo : String
 })
 
-const UserGoogle = new mongoose.model('UserGoogle', userSchema);
+const UserFacebook = new mongoose.model('UserFacebook', userSchema);
 
 
-module.exports = UserGoogle;
+module.exports = UserFacebook;
