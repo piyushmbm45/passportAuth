@@ -4,7 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const User = require('../userSchema')
+const User = require('../config/userSchema')
 
 
 router.use(express.json());

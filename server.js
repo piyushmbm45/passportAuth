@@ -8,5 +8,6 @@ const app = express();
 // Routes
 app.use('/', require('./routes/home'))
 app.use('/', require('./routes/passportLocal'))
+app.use('/', require('./routes/passportGoogle'))
 
 app.listen(PORT, () => console.log(`Listening on Port ${PORT}`))
