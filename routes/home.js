@@ -8,12 +8,12 @@ router.use(express.urlencoded({
 }))
 
 router.set('view engine', 'ejs')
-router.use(express.static("public"));
+router.use(express.static("../public"));
 
 
 
-router.get('/home',(req,res)=>{
-    res.render('index')
+router.get('/',(req,res)=>{
+    res.render('home')
 })
 
 module.exports = router;

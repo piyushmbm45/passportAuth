@@ -21,17 +21,15 @@ router.use(express.static("public"));
 
 passport.use(new LocalStrategy((username, password, done) => {
     User.findOne({username: username})
-    .then((user) => {
+    .then(async (user) => {
         console.log(user);
         if (!user) { return done(null, false)}
 
-         const isValid = validPassword(password, user.password);
+         const isValid = await validPassword(password, user.password);
         console.log(`is valid part ${isValid}`);
         if (isValid) {
-            console.log("this ti ajb");
             return done(null, user);
         }else{
-            console.log("hello 123");
             return done(null, false);
         }})
     .catch((err)=>{
@@ -41,16 +39,10 @@ passport.use(new LocalStrategy((username, password, done) => {
 }))
 
 
-function validPassword(user_pwd, db_pwd) {
-   return bcrypt.compare(user_pwd, db_pwd, (err, res) => {
-        if (err) {
-            console.log(`validity return ${res}`);
-            return res;
-        } else {
-            console.log(`validity return ${res}`);
-            return res;
-        }
-    })
+async function validPassword(user_pwd,db_pwd){
+    const value = await bcrypt.compare(user_pwd,db_pwd)
+    console.log(`valid password value is ${value}`);
+    return value;
 }
 
 

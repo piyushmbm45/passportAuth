@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.home{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.child{
+    align-self: center;
+    justify-self: center;
+}
