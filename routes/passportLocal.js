@@ -20,40 +20,43 @@ router.use(express.static("public"));
 
 
 passport.use(new LocalStrategy((username, password, done) => {
-    User.findOne({
-        username: username
-    }, (err, user) => {
-        if (err) {
-            return done(err);
-        }
-        if (!user) {
+    User.findOne({username: username})
+    .then((user) => {
+        console.log(user);
+        if (!user) { return done(null, false)}
+
+         const isValid = validPassword(password, user.password);
+        console.log(`is valid part ${isValid}`);
+        if (isValid) {
+            console.log("this ti ajb");
+            return done(null, user);
+        }else{
+            console.log("hello 123");
             return done(null, false);
-        }
-        if (!validPassword(password, user.password)) {
-            return done(null, false, {
-                message: "Incorrect Password"
-            });
-        }
-        return done(null, user);
-    })
+        }})
+    .catch((err)=>{
+            done(err)
+        })
+    
 }))
 
 
-async function validPassword(user_pwd, db_pwd) {
-    const value = bcrypt.compare(user_pwd, db_pwd, (err, res) => {
+function validPassword(user_pwd, db_pwd) {
+   return bcrypt.compare(user_pwd, db_pwd, (err, res) => {
         if (err) {
+            console.log(`validity return ${res}`);
             return res;
         } else {
+            console.log(`validity return ${res}`);
             return res;
         }
     })
-    return value;
 }
 
 
 router.get('/register', (req, res) => {
     res.render('register')
-//     // showing user to register on app to see the secret page
+    //     // showing user to register on app to see the secret page
 })
 
 router.post('/register', async (req, res) => {
@@ -89,15 +92,17 @@ router.get('/login', (req, res) => {
 })
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
+    failureFlash: true,
     session: false
 }), (req, res) => {
+    console.log("log in success");
     res.render('secret')
-//     //     const userName= req.body.username;
-//     //     const password = req.body.password;
-//     // get the username and password from the user
-//     // authenticate it
-//     // if correct the render it to secret
-//     // otherwise send it to login page
+    //     //     const userName= req.body.username;
+    //     //     const password = req.body.password;
+    //     // get the username and password from the user
+    //     // authenticate it
+    //     // if correct the render it to secret
+    //     // otherwise send it to login page
 })
 
 module.exports = router;
