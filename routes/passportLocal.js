@@ -33,7 +33,7 @@ passport.use(new LocalStrategy((username, password, done) => {
             return done(null, false);
         }})
     .catch((err)=>{
-            done(err)
+           return done(err)
         })
     
 }))
@@ -54,7 +54,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     const nameIn = req.body.name;
     const passwordIn = req.body.password;
-    // console.log(nameIn);
+    // console.log(req.body);
     const hash = await bcrypt.hash(passwordIn, saltRounds);
     const newUser = await new User({
         name: nameIn,
@@ -65,7 +65,7 @@ router.post('/register', async (req, res) => {
         if (!err) {
             res.render('secret')
         } else {
-            res.redirect('/register');
+            res.send(err.message);
         }
     })
     // create new user in db

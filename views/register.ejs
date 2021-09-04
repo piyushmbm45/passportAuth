@@ -3,15 +3,15 @@
     <form action="/register" method="post">
       <div class="my-3">
         <label for="name">Enter Your Name</label>
-        <input class="form-control" type="text" name="name" placeholder="Name">
+        <input class="form-control" type="text" name="name" placeholder="Name" required>
       </div>
       <div class="my-3">
         <label for="emailId">Enter Your Mail Id</label>
-        <input class="form-control" type="text" name="username" placeholder="Email Id">
+        <input class="form-control" type="email" name="username" placeholder="Email Id" required>
       </div>
       <div class="my-3">
         <label for="password">Enter Password</label>
-        <input class="form-control" type="password" name="password" placeholder="Password">
+        <input class="form-control" type="password" name="password" placeholder="Password" required>
       </div>
       <button class="btn btn-outline-info my-3" type="submit">Sign Up</button>
     </form>

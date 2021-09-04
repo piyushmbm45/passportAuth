@@ -1,29 +1,28 @@
-const mongoose = require('mongoose');
-const {
-    Schema
-} = mongoose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-
-const uri = process.env.DB_URL
-mongoose.connect(uri, {
+const uri = process.env.DB_URL;
+mongoose.connect(
+  uri,
+  {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (err) => {
+    useUnifiedTopology: true,
+  },
+  (err) => {
     if (!err) {
-        console.log("Database Connected Successfully");
+      console.log("Database Connected Successfully");
     } else {
-        console.log(err);
+      console.log(err);
     }
-});
-
+  }
+);
 
 const userSchema = new Schema({
-    name: String,
-    username: String,
-    password: String
-})
+  name: { type: String },
+  username: { type: String, unique: true},
+  password: String,
+},{timestamps: true});
 
-const User = new mongoose.model('User', userSchema);
-
+const User = new mongoose.model("User", userSchema);
 
 module.exports = User;
