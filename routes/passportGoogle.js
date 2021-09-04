@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy({
         callbackURL: "http://localhost:3000/auth/google/secrets"
     },
     function (accessToken, refreshToken, profile, cb) {
-        // console.log(profile);
+        console.log(profile);
         UserGoogle.findOne({
             id: profile.id
         }, (err, user) => {
@@ -35,7 +35,8 @@ passport.use(new GoogleStrategy({
                 const user = new UserGoogle({
                     id: profile.id,
                     name: profile.displayName,
-                    photo: profile.photos[0].value
+                    photo: profile.photos[0].value,
+                    email: profile.emails[0].value
                 });
                 user.save((err) => {
                     if (err) {
@@ -54,7 +55,7 @@ passport.use(new GoogleStrategy({
 
 router.get('/auth/google',
     passport.authenticate('google', {
-        scope: ['profile']
+        scope: ['profile', 'email']
     }));
 
 router.get('/auth/google/secrets',

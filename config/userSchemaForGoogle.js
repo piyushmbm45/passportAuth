@@ -19,7 +19,9 @@ mongoose.connect(uri, {
 
 const userSchema = new Schema({
     id : String,
-    name: String
+    name: String,
+    photo: String,
+    email: String
 })
 
 const UserGoogle = new mongoose.model('UserGoogle', userSchema);
