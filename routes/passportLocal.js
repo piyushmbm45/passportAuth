@@ -41,7 +41,6 @@ passport.use(new LocalStrategy((username, password, done) => {
 
 async function validPassword(user_pwd,db_pwd){
     const value = await bcrypt.compare(user_pwd,db_pwd)
-    console.log(`valid password value is ${value}`);
     return value;
 }
 
@@ -95,6 +94,11 @@ router.post('/login', passport.authenticate('local', {
     //     // authenticate it
     //     // if correct the render it to secret
     //     // otherwise send it to login page
+})
+
+router.get('/logout',(req,res)=>{
+    req.logOut();
+    res.redirect('/')
 })
 
 module.exports = router;
