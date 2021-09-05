@@ -21,6 +21,10 @@ const userSchema = new Schema({
   name: { type: String },
   username: { type: String, unique: true},
   password: String,
+  lastLogin :{
+      type: Date,
+      default: Date.now
+  }
 },{timestamps: true});
 
 const User = new mongoose.model("User", userSchema);
