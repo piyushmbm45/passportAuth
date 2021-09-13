@@ -2,10 +2,10 @@ const express = require('express');
 const router = express();
 const passport = require('passport');
 const mongoose = require('mongoose');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const UserGoogle = require('../config/userSchemaForGoogle');
-const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const UserFacebook = require('../config/userSchemaForFacebook');
+const FACEBOOK_APP_ID = process.env.APP_ID;
+const FACEBOOK_APP_SECRET = process.env.APP_SECRET;
 
 router.use(express.json());
 router.use(express.urlencoded({
@@ -18,25 +18,23 @@ router.set('view engine', 'ejs')
 router.use(express.static("public"));
 
 
-passport.use(new GoogleStrategy({
-        clientID: GOOGLE_CLIENT_ID,
-        clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/secrets"
+passport.use(new FacebookStrategy({
+        clientID: FACEBOOK_APP_ID,
+        clientSecret: FACEBOOK_APP_SECRET,
+        callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     function (accessToken, refreshToken, profile, cb) {
         console.log(profile);
-        UserGoogle.findOne({
+        UserFacebook.findOne({
             id: profile.id
         }, (err, user) => {
             if (err) {
                 return cb(err)
             }
             if (!user) {
-                const user = new UserGoogle({
+                const user = new UserFacebook({
                     id: profile.id,
-                    name: profile.displayName,
-                    photo: profile.photos[0].value,
-                    email: profile.emails[0].value
+                    name: profile.displayName
                 });
                 user.save((err) => {
                     if (err) {
@@ -53,13 +51,11 @@ passport.use(new GoogleStrategy({
     }));
 
 
-router.get('/auth/google',
-    passport.authenticate('google', {
-        scope: ['profile', 'email']
-    }));
+router.get('/auth/facebook',
+    passport.authenticate('facebook',{scope: ['profile', 'email']}));
 
-router.get('/auth/google/secrets',
-    passport.authenticate('google', {
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
         failureRedirect: '/home',
         session: false
     }),

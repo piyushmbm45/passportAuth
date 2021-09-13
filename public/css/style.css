@@ -9,12 +9,25 @@
     background-attachment: fixed;
     background-size: cover;
 } */
-.home{
+/* .home{
     display: grid;
     justify-content: center;
-    align-items: center;
-}
-.child{
+    grid-auto-rows: 90px;
+} */
+/* .child{
     align-self: center;
     justify-self: center;
+} */
+
+/* .image{
+
+} */
+
+input{
+    width: 10px;
+}
+
+.home-img{
+    height: 100vh;
+    width: 90%;
 }
