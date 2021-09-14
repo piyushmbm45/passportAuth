@@ -4,30 +4,15 @@
     box-sizing: border-box;
     text-decoration: none;
 }
-/* body{
-    background-image: url("https://images.pexels.com/photos/2259221/pexels-photo-2259221.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-    background-attachment: fixed;
-    background-size: cover;
-} */
-/* .home{
-    display: grid;
-    justify-content: center;
-    grid-auto-rows: 90px;
-} */
-/* .child{
-    align-self: center;
-    justify-self: center;
-} */
 
-/* .image{
-
-} */
-
-input{
-    width: 10px;
-}
 
 .home-img{
     height: 100vh;
-    width: 90%;
+}
+.login{
+    text-align: center;
+}
+
+.secret{
+    text-align: center;
 }
