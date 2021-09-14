@@ -45,9 +45,15 @@ router.post("/", async (req, res) => {
   });
   newUser.save((err) => {
     if (!err) {
-      res.redirect("/secret");
+      req.flash('info','You are registered You can now login')
+      res.redirect("/login");
     } else {
+      if(err.code === 11000){
+        req.flash('info', 'User Already Exist')
+        res.redirect("/");
+      }else{
       res.redirect("/");
+      }
     }
   });
 });

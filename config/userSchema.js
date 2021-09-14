@@ -17,15 +17,22 @@ mongoose.connect(
   }
 );
 
-const userSchema = new Schema({
-  name: { type: String },
-  username: { type: String, unique: true},
-  password: String,
-  lastLogin :{
+const userSchema = new Schema(
+  {
+    name: String,
+    username: { 
+      type: String, 
+      unique: true,
+      lowercase: true
+    },
+    password: String,
+    lastLogin: {
       type: Date,
-      default: Date.now
-  }
-},{timestamps: true});
+      default: Date.now,
+    },
+  },
+  { timestamps: true }
+);
 
 const User = new mongoose.model("User", userSchema);
 
