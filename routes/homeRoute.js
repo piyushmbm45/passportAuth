@@ -68,11 +68,24 @@ router.post(
     session: true,
   }),
   (req, res) => {
-    console.log(req.body.username);
-    User
+    // console.log(req.body.username);
     res.redirect("/secret");
   }
 );
+
+
+
+// --------logout route
+router.delete("/logout", (req, res, next) => {
+  req.logOut();
+  res.redirect("/");
+});
+
+// secret route
+router.get("/secret", checkAuthenticated, (req, res) => {
+  console.log(req.user.last_login);
+  res.render("secret");
+});
 
 // need authenticated user to see our secret route
 function checkAuthenticated(req, res, next) {
@@ -89,16 +102,5 @@ function checkNotAuthenticated(req, res, next) {
   }
   next();
 }
-
-// --------logout route
-router.delete("/logout", (req, res, next) => {
-  req.logOut();
-  res.redirect("/");
-});
-
-// secret route
-router.get("/secret", checkAuthenticated, (req, res) => {
-  res.render("secret");
-});
 
 module.exports = router;
