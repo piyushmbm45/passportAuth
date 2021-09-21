@@ -26,7 +26,7 @@ const userSchema = new Schema(
       lowercase: true
     },
     password: String,
-    lastLogin: {
+    last_login: {
       type: Date,
       default: Date.now,
     },
