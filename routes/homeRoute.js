@@ -7,7 +7,6 @@ const User = require("../config/userSchema");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 
-
 const initializePassport = require("../config/passportLocalConfig");
 initializePassport(passport);
 
@@ -21,8 +20,6 @@ router.use(
 // middleware to use ejs template engine
 router.set("view engine", "ejs");
 router.use(express.static("public"));
-
-
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -39,14 +36,14 @@ router.post("/", async (req, res) => {
   });
   newUser.save((err) => {
     if (!err) {
-      req.flash('info','You are registered You can now login')
+      req.flash("info", "You are registered Now You can login");
       res.redirect("/login");
     } else {
-      if(err.code === 11000){
-        req.flash('info', 'User Already Exist')
+      if (err.code === 11000) {
+        req.flash("info", "User Already Exist");
         res.redirect("/");
-      }else{
-      res.redirect("/");
+      } else {
+        res.redirect("/");
       }
     }
   });
@@ -69,14 +66,26 @@ router.post(
   }),
   (req, res) => {
     // console.log(req.body.username);
+
     res.redirect("/secret");
   }
 );
 
-
-
 // --------logout route
 router.delete("/logout", (req, res, next) => {
+  const email = req.user.username;
+  console.log(req.user);
+  User.findOneAndUpdate(
+    { username: email },
+    { last_login: Date.now() },
+    async (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        await user.save();
+      }
+    }
+  );
   req.logOut();
   res.redirect("/");
 });
@@ -84,7 +93,7 @@ router.delete("/logout", (req, res, next) => {
 // secret route
 router.get("/secret", checkAuthenticated, (req, res) => {
   console.log(req.user.last_login);
-  res.render("secret");
+  res.render("secret", { user: req.user });
 });
 
 // need authenticated user to see our secret route
