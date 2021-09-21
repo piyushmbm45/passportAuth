@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("../config/userSchema");
 const flash = require("express-flash");
-const session = require("express-session");
 const methodOverride = require("method-override");
+
 
 const initializePassport = require("../config/passportLocalConfig");
 initializePassport(passport);
@@ -22,13 +22,7 @@ router.use(
 router.set("view engine", "ejs");
 router.use(express.static("public"));
 
-router.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -74,7 +68,8 @@ router.post(
     session: true,
   }),
   (req, res) => {
-    req.flash();
+    console.log(req.body.username);
+    User
     res.redirect("/secret");
   }
 );
