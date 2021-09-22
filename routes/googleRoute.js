@@ -41,7 +41,6 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/google/secrets",
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
       const user = await getUserByEmail(profile.emails[0].value);
       try {
         if (!user) {
@@ -80,7 +79,6 @@ router.get(
     session: true,
   }),
   function (req, res) {
-    console.log("success");
     // Successful authentication, redirect home.
     res.redirect("/secret");
   }

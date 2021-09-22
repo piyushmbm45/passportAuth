@@ -65,8 +65,6 @@ router.post(
     session: true,
   }),
   (req, res) => {
-    // console.log(req.body.username);
-
     res.redirect("/secret");
   }
 );
@@ -74,7 +72,6 @@ router.post(
 // --------logout route
 router.delete("/logout", (req, res, next) => {
   const email = req.user.username;
-  console.log(req.user);
   User.findOneAndUpdate(
     { username: email },
     { last_login: Date.now() },
@@ -92,7 +89,6 @@ router.delete("/logout", (req, res, next) => {
 
 // secret route
 router.get("/secret", checkAuthenticated, (req, res) => {
-  console.log(req.user.last_login);
   res.render("secret", { user: req.user });
 });
 

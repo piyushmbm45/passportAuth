@@ -35,10 +35,9 @@ passport.use(
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:3000/auth/facebook/callback",
-      profileFields: ['id', 'displayName', 'email']
+      profileFields: ["id", "displayName", "email"],
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
       User.findOne(
         {
           username: profile.emails[0].value,
@@ -68,17 +67,14 @@ passport.use(
   )
 );
 
-router.get(
-  "/auth/facebook",
-  passport.authenticate("facebook")
-);
+router.get("/auth/facebook", passport.authenticate("facebook"));
 
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
     failureRedirect: "/",
     successRedirect: "/secret",
-    session: true
+    session: true,
   })
 );
 
