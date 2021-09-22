@@ -13,15 +13,11 @@
 - [Setup](#setup)
 
 ## Description
-
-
-### For Any website authentication of user is very important to show or hide data. In this Project I am authenticating user in many different ways like **Local** , **Google** and **Facebook**.
-
-### To make things similar in this project i'm using **Passport Library** for all types of login method.
+For Any website authentication of user is very important to show or hide data. In this Project I am authenticating user in many different ways like **Local** , **Google** and **Facebook**.
+To make things similar in this project i'm using **Passport Library** for all types of login method.
 
 ### Why Passport Library :-
-
-### _Passport Library_ is very famous for authenticating the user. It has more than 500 strategies to authenticate user.
+_Passport Library_ is very famous for authenticating the user. It has more than 500 strategies to authenticate user.
 
 ## Technologies
 
