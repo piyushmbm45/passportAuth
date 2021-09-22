@@ -3,11 +3,11 @@ const router = express();
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const User = require("../config/userSchema");
+const User = require("../utils/userSchema");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 
-const initializePassport = require("../config/passportLocalConfig");
+const initializePassport = require("../middleware/passportLocalConfig");
 initializePassport(passport);
 
 router.use(flash());

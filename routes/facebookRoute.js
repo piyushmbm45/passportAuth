@@ -3,7 +3,7 @@ const router = express();
 const passport = require("passport");
 const mongoose = require("mongoose");
 const FacebookStrategy = require("passport-facebook").Strategy;
-const User = require("../config/userSchema");
+const User = require("../utils/userSchema");
 const FACEBOOK_APP_ID = process.env.APP_ID;
 const FACEBOOK_APP_SECRET = process.env.APP_SECRET;
 
