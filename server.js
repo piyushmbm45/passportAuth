@@ -10,5 +10,6 @@ app.use('/',require('./config/sessions'))
 app.use('/', require('./routes/homeRoute'))
 app.use('/', require('./routes/googleRoute'))
 app.use('/', require('./routes/facebookRoute'))
+app.use('/',require('./routes/twitterRoute'))
 
 app.listen(PORT, () => console.log(`Listening on Port ${PORT}`))
