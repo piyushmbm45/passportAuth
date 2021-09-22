@@ -1,28 +1,33 @@
-<%- include('header') %>
+<%- include('./partials/header.ejs') %>
+<% if(messages.info){ %>
+    <div class="alert alert-warning">
+      <%= messages.info %>
+    </div>
+    <% } %>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col">
                             <img class="home-img" src="/img/undraw_confidential_letter_w6ux.png" alt="img">
                         </div>
-                        <div class="col-5 home container">
-                            <div>
+                        <div class="col">
+                            <div class="pt-5 pb-2">
                                 <h1>User Authentication</h1>
                                 <h2>Get Started</h2>
                                 <h4>Already have an account ?</h4>
                             </div>
                             <div class="child">
                                 <form action="/login" method="get">
-                                    <button class="btn btn-outline-primary" type="submit">LOGIN</button>
+                                    <button class="btn btn-outline-danger" type="submit">Sign In</button>
                                 </form>
                             </div>
-                            <div>
+                            <div class="my-3">
                                 Or
                             </div>
                             <div class="my-3 child">
                                 <form action="/" method="post">
                                     <div class="my-2">
                                         <label for="name">Enter Your Name</label>
-                                        <input class="form-control" type="text" name="name" placeholder="Name" required>
+                                        <input class="form-control danger" type="text" name="name" placeholder="Name" required>
                                     </div>
                                     <div class="my-2">
                                         <label for="emailId">Enter Your Mail Id</label>
@@ -36,13 +41,10 @@
                                             title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                                             required>
                                     </div>
-                                    <button class="btn btn-outline-info my-2" type="submit">Sign Up</button>
+                                    <button class="btn btn-outline-dark my-2" type="submit">Sign Up</button>
                                 </form>
-                                <!-- <form action="/register" method="get">
-                        <button class="btn btn-outline-danger" type="submit">Register</button>
-                    </form> -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <%- include('footer') %>
+                <%- include('./partials/footer.ejs') %>

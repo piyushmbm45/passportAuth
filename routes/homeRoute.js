@@ -3,12 +3,11 @@ const router = express();
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const User = require("../config/userSchema");
+const User = require("../utils/userSchema");
 const flash = require("express-flash");
-const session = require("express-session");
 const methodOverride = require("method-override");
 
-const initializePassport = require("../config/passportLocalConfig");
+const initializePassport = require("../middleware/passportLocalConfig");
 initializePassport(passport);
 
 router.use(flash());
@@ -21,14 +20,6 @@ router.use(
 // middleware to use ejs template engine
 router.set("view engine", "ejs");
 router.use(express.static("public"));
-
-router.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -45,9 +36,15 @@ router.post("/", async (req, res) => {
   });
   newUser.save((err) => {
     if (!err) {
-      res.redirect("/secret");
+      req.flash("info", "You are registered Now You can login");
+      res.redirect("/login");
     } else {
-      res.redirect("/");
+      if (err.code === 11000) {
+        req.flash("info", "User Already Exist");
+        res.redirect("/");
+      } else {
+        res.redirect("/");
+      }
     }
   });
 });
@@ -68,10 +65,32 @@ router.post(
     session: true,
   }),
   (req, res) => {
-    req.flash();
     res.redirect("/secret");
   }
 );
+
+// --------logout route
+router.delete("/logout", (req, res, next) => {
+  const email = req.user.username;
+  User.findOneAndUpdate(
+    { username: email },
+    { last_login: Date.now() },
+    async (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        await user.save();
+      }
+    }
+  );
+  req.logOut();
+  res.redirect("/");
+});
+
+// secret route
+router.get("/secret", checkAuthenticated, (req, res) => {
+  res.render("secret", { user: req.user });
+});
 
 // need authenticated user to see our secret route
 function checkAuthenticated(req, res, next) {
@@ -88,16 +107,5 @@ function checkNotAuthenticated(req, res, next) {
   }
   next();
 }
-
-// --------logout route
-router.delete("/logout", (req, res, next) => {
-  req.logOut();
-  res.redirect("/");
-});
-
-// secret route
-router.get("/secret", checkAuthenticated, (req, res) => {
-  res.render("secret");
-});
 
 module.exports = router;

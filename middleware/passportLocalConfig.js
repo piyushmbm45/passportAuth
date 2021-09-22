@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("../config/userSchema");
+const User = require("../utils/userSchema");
 
 
 function initialize (passport){

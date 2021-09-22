@@ -3,7 +3,7 @@ const router = express();
 const passport = require("passport");
 const mongoose = require("mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("../config/userSchema");
+const User = require("../utils/userSchema");
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 
@@ -15,12 +15,22 @@ router.use(
 );
 
 router.use(passport.initialize());
+router.use(passport.session());
 // middleware to use ejs template engine
 router.set("view engine", "ejs");
 router.use(express.static("public"));
 
-function getUserByEmail(email){
-    return User.findOne({ username: email });
+passport.serializeUser(function (user, done) {
+  done(null, user._id);
+});
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+function getUserByEmail(email) {
+  return User.findOne({ username: email });
 }
 
 passport.use(
@@ -31,29 +41,29 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/google/secrets",
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      const  user = await getUserByEmail(profile.emails[0].value);
-      try{
-          if (!user) {
-            const user = new User({
-              name: profile.displayName,
-              username: profile.emails[0].value
-            });
-            user.save((err) => {
-              if (err) {
-                console.log(err);
-              } else {
-                return done(err, user);
-              }
-            });
-          } else {
-            return done(err, user);
-          }}
-          catch(err){
-              return done(err)
-          }
+      const user = await getUserByEmail(profile.emails[0].value);
+      try {
+        if (!user) {
+          const user = new User({
+            name: profile.displayName,
+            username: profile.emails[0].value,
+          });
+          user.save((err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              return done(null, user);
+            }
+          });
+        } else {
+          return done(null, user);
         }
-  ));
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
 
 router.get(
   "/auth/google",
@@ -69,7 +79,6 @@ router.get(
     session: true,
   }),
   function (req, res) {
-    console.log("success");
     // Successful authentication, redirect home.
     res.redirect("/secret");
   }

@@ -1,20 +1,37 @@
-<%- include ('header') %>
-<% if(messages.error){ %>
-  <%= messages.error %>
-      <% } %>
-  <div class="container">
-    <form action="/login" method="post">
-      <div class="my-3">
-        <label for="inputEmail">Email Address</label>
-        <input class="form-control" type="text" name="username" placeholder="Email Id">
-      </div>
-      <div class="my-3">
-        <label for="inputEmail">Password</label>
-        <input class="form-control" type="password" name="password" placeholder="Password">
-      </div>
-      <button class="btn btn-outline-success" type="submit">Sign in</button>
-      <a href="/auth/google" class="btn btn-outline-danger mx-2"><i class="fab fa-google"></i> Sign in With Google</a>
-      <a href="/auth/facebook" class="btn btn-outline-primary mx-2"><i class="fab fa-facebook-f"></i> Sign in With Facebook</a>
-    </form>
-  </div>
-  <%- include ('footer') %>
+<%- include ('./partials/header.ejs') %>
+  <% if(messages.info){ %>
+    <div class="alert alert-success" role="alert">
+      <%= messages.info %>
+    </div>
+    <% } %>
+      <% if(messages.error){ %>
+        <div class="alert alert-danger">
+          <%= messages.error %>
+        </div>
+        <% } %>
+          <div class="container">
+            <div class="login">
+              <img src="/img/undraw_Access_account_re_8spm.png" alt="demo-img" height="300px">
+            </div>
+            <div>
+              <form action="/login" method="post">
+                <div class="my-3">
+                  <label for="inputEmail">Email Address</label>
+                  <input class="form-control" type="text" name="username" placeholder="Email Id">
+                </div>
+                <div class="my-3">
+                  <label for="inputEmail">Password</label>
+                  <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <button class="btn btn-outline-success" type="submit">Sign in</button>
+                <a href="/auth/google" class="btn btn-outline-danger mx-2"><i class="fab fa-google"></i> Sign in With
+                  Google</a>
+                <a href="/auth/facebook" class="btn btn-outline-primary mx-2"><i class="fab fa-facebook-f"></i> Sign in
+                  With Facebook</a>
+                  <a href="/auth/twitter" class="btn btn-outline-info mx-2"><i class="fab fa-twitter-f"></i> Sign in
+                    With Twitter</a>
+              </form>
+            </div>
+
+          </div>
+          <%- include ('./partials/footer') %>
