@@ -35,8 +35,8 @@ _Passport Library_ is very famous for authenticating the user. It has more than 
 
 ## Learning Objective
 
-- Passport, Express js, Node Js,MongoDb, Ejs Template, Java Script, Bootstrap etc.
-- How Async and Await works
+- Passport, Express js, Node Js, MongoDb, Ejs Template, Java Script, Bootstrap etc.
+- How Async and Await works.
 - Hashing and Salting of password before saving password in Database
 - Express session Middleware for serialize and deserialize user
 - Flash Message - Like Password didn't Match, user already exists etc.
@@ -52,7 +52,7 @@ _Passport Library_ is very famous for authenticating the user. It has more than 
 ## Setup
 
 - To run this project, fork it.
-- Before running the server.js file first install the all dependencies in computer. You can see used dependencies in Package.json file.
+- Before running the server.js file first install the all dependencies in computer. You can see used dependencies in Package.json file.( or directly run npm i)
 - See env.example file and add environment variable according to it.
-- For local authentication google, facebook and twitter API/APP keys not required
+- For local authentication - google, facebook and twitter API/APP keys not required
 - Good to go - run server.js file
