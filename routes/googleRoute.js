@@ -79,6 +79,7 @@ router.get(
     session: true,
   }),
   function (req, res) {
+    console.log(req.session);
     // Successful authentication, redirect home.
     res.redirect("/secret");
   }

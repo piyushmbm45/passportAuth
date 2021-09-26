@@ -73,9 +73,12 @@ router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
     failureRedirect: "/",
-    successRedirect: "/secret",
+    // successRedirect: "/secret",
     session: true,
-  })
+  }),(req,res)=>{
+    console.log(req.session);
+    res.redirect('/secret')
+  }
 );
 
 module.exports = router;

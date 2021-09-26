@@ -65,6 +65,7 @@ router.post(
     session: true,
   }),
   (req, res) => {
+    console.log(req.session);
     res.redirect("/secret");
   }
 );
@@ -84,6 +85,7 @@ router.delete("/logout", (req, res, next) => {
     }
   );
   req.logOut();
+  console.log(req.session);
   res.redirect("/");
 });
 
