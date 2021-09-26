@@ -3,8 +3,7 @@ const saltRounds = 10;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../utils/userSchema");
 
-
-function initialize (passport){
+function initialize(passport) {
   const getUserByEmail = (username) => {
     return User.findOne({ username: username });
   };
@@ -12,9 +11,12 @@ function initialize (passport){
   const authenticateUser = async (username, password, done) => {
     const user = await getUserByEmail(username);
     if (user === null) {
-      return done(null, false, { message: "No user Found with email" });
+      return done(null, false, { message: "No user Found with this email id" });
     }
     try {
+      if (user.password === null) {
+        return done(null, false, { message: "user already exists" });
+      }
       if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {
@@ -25,10 +27,17 @@ function initialize (passport){
     }
   };
 
-  passport.use(new LocalStrategy({ usernameField: "username" }, authenticateUser));
-  passport.serializeUser(function (user, done) {done(null, user._id);});
-  passport.deserializeUser(function (id, done) {User.findById(id, function (err, user) {done(err, user);});
+  passport.use(
+    new LocalStrategy({ usernameField: "username" }, authenticateUser)
+  );
+  passport.serializeUser(function (user, done) {
+    done(null, user._id);
   });
-};
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
+}
 
 module.exports = initialize;
