@@ -34,7 +34,7 @@ passport.use(
     {
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:3000/auth/facebook/callback",
+      callbackURL: "https://userauth45.herokuapp.com/auth/facebook/callback",
       profileFields: ["id", "displayName", "email"],
     },
     function (accessToken, refreshToken, profile, cb) {
