@@ -34,7 +34,7 @@ passport.use(
     {
       consumerKey: TWITTER_APP_KEY,
       consumerSecret: TWITTER_APP_KEY_SECRET,
-      callbackURL: "http://localhost:3000/auth/twitter/callback"
+      callbackURL: "https://userauth45.herokuapp.com/auth/twitter/callback"
     },
     function (token, tokenSecret, profile, cb) {
       console.log(profile);
