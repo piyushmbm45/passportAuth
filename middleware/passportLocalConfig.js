@@ -10,14 +10,12 @@ function initialize(passport) {
 
   const authenticateUser = async (username, password, done) => {
     const user = await getUserByEmail(username);
-    if (user === null) {
-      return done(null, false, { message: "No user Found with this email id" });
-    }
     try {
-      if (user.password === null) {
+      if (user === null) {
+        return done(null, false, { message: "No user Found with this email id"});
+      } else if (user.password === null) {
         return done(null, false, { message: "user already exists" });
-      }
-      if (await bcrypt.compare(password, user.password)) {
+      } else if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {
         return done(null, false, { message: "Password Not Match" });
