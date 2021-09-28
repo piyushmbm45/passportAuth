@@ -13,8 +13,8 @@ function initialize(passport) {
     try {
       if (user === null) {
         return done(null, false, { message: "No user Found with this email id"});
-      } else if (user.password === null) {
-        return done(null, false, { message: "user already exists" });
+      } else if (!user.hasOwnProperty('password')) {
+        return done(null, false, { message: "User already exists" });
       } else if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {

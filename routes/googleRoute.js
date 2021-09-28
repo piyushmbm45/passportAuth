@@ -38,7 +38,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://userauth45.herokuapp.com/auth/google/secrets",
+      callbackURL: "http://localhost:3000/auth/google/secrets",
     },
     async function (accessToken, refreshToken, profile, done) {
       const user = await getUserByEmail(profile.emails[0].value);
@@ -47,6 +47,7 @@ passport.use(
           const user = new User({
             name: profile.displayName,
             username: profile.emails[0].value,
+            password: null
           });
           user.save((err) => {
             if (err) {
