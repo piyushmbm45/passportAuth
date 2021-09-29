@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../utils/userSchema");
+const logger = require("../utils/logger");
 
 function initialize(passport) {
   const getUserByEmail = (username) => {
@@ -10,10 +11,14 @@ function initialize(passport) {
 
   const authenticateUser = async (username, password, done) => {
     const user = await getUserByEmail(username);
+    logger.getLogger.log("info", user);
+    logger.getLogger.log("info", user.hasOwnProperty("password"));
     try {
       if (user === null) {
-        return done(null, false, { message: "No user Found with this email id"});
-      } else if (user.hasOwnProperty('password')) {
+        return done(null, false, {
+          message: "No user Found with this email id",
+        });
+      } else if (user.hasOwnProperty("password")) {
         return done(null, false, { message: "User already exists" });
       } else if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
@@ -21,6 +26,7 @@ function initialize(passport) {
         return done(null, false, { message: "Password Not Match" });
       }
     } catch (err) {
+      logger.getLogger.log("error", err);
       return done(err);
     }
   };
