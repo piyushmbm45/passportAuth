@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("../utils/userSchema");
 const flash = require("express-flash");
-const methodOverride = require("method-override");
+// const methodOverride = require("method-override");
 
 const initializePassport = require("../middleware/passportLocalConfig");
 initializePassport(passport);
@@ -71,9 +71,10 @@ router.post(
 );
 
 // --------logout route
-router.delete("/logout", (req, res, next) => {
+router.post("/logout", async (req, res, next) => {
   const email = req.user.username;
-  User.findOneAndUpdate(
+  console.log(email);
+  await User.findOneAndUpdate(
     { username: email },
     { last_login: Date.now() },
     async (err, user) => {
