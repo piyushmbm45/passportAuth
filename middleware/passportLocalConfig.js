@@ -19,7 +19,7 @@ function initialize(passport) {
         return done(null, false, {
           message: "No user Found with this email id",
         });
-      } else if (user.hasOwnProperty("password")) {
+      } else if (user.password == undefined) {
         return done(null, false, { message: "User already exists" });
       } else if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
