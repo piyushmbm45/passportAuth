@@ -13,7 +13,7 @@ function initialize(passport) {
     const user = await getUserByEmail(username);
       console.log(user);
       console.log(user.password);
-      console.log(user.password === "undefined");
+      console.log(user.password == undefined);
     try {
       if (user === null) {
         return done(null, false, {
