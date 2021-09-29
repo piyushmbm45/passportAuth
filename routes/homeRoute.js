@@ -25,7 +25,7 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 // ------ form method for logout - delete method at the place of POST method
-router.use(methodOverride("_method"));
+// router.use(methodOverride("_method"));
 
 router.post("/", async (req, res) => {
   const hash = await bcrypt.hash(req.body.password, saltRounds);
