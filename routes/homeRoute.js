@@ -71,10 +71,10 @@ router.post(
 );
 
 // --------logout route
-router.post("/logout", async (req, res, next) => {
+router.post("/logout", (req, res, next) => {
   const email = req.user.username;
   console.log(email);
-  await User.findOneAndUpdate(
+  User.findOneAndUpdate(
     { username: email },
     { last_login: Date.now() },
     async (err, user) => {
