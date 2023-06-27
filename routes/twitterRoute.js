@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express();
 const passport = require("passport");
-const mongoose = require("mongoose");
 const twitterStrategy = require("passport-twitter").Strategy;
 const User = require("../utils/userSchema");
 const TWITTER_APP_KEY = process.env.API_KEY;

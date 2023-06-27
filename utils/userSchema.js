@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const uri = process.env.DB_URL;
+mongoose.set('strictQuery', true);
 mongoose.connect(
   uri,
   {
@@ -10,7 +11,7 @@ mongoose.connect(
   },
   (err) => {
     if (!err) {
-      console.log("Database Connected Successfully");
+      console.log('Database Connected Successfully');
     } else {
       console.log(err);
     }
@@ -20,10 +21,10 @@ mongoose.connect(
 const userSchema = new Schema(
   {
     name: String,
-    username: { 
-      type: String, 
+    username: {
+      type: String,
       unique: true,
-      lowercase: true
+      lowercase: true,
     },
     password: String,
     last_login: {
@@ -34,6 +35,6 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-const User = new mongoose.model("User", userSchema);
+const User = new mongoose.model('User', userSchema);
 
 module.exports = User;

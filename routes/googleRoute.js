@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express();
 const passport = require("passport");
-const mongoose = require("mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../utils/userSchema");
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
