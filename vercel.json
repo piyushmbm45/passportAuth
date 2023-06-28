@@ -1,0 +1,6 @@
+{
+  "name": "passport-auth",
+  "framework": "nodejs",
+  "functions": ["server.js"],
+  "pages": ["home.ejs"]
+}
