@@ -45,12 +45,12 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', checkNotAuthenticated, (req, res) => {
-  res.render('home');
+  res.render('pages/home');
 });
 
 // for login route
 router.get('/login', checkNotAuthenticated, (req, res) => {
-  res.render('login');
+  res.render('pages/login');
 });
 router.post(
   '/login',
@@ -87,7 +87,7 @@ router.post('/logout', (req, res, next) => {
 
 // secret route
 router.get('/secret', checkAuthenticated, (req, res) => {
-  res.render('secret', { user: req.user });
+  res.render('pages/secret', { user: req.user });
 });
 
 // need authenticated user to see our secret route
